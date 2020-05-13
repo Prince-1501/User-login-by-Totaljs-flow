@@ -7,3 +7,7 @@
 - run `$ node debug.js`
 - open browser `http://127.0.0.1:8000`
 - For Flow dashboard refer : `http://192.168.43.166:8000/#main`
+
+------------------------------------------------------------------------------------------------
+
+![Image of Shared work](https://github.com/Prince-1501/User-login-by-Totaljs-flow/blob/master/images/share_work.jpg)
