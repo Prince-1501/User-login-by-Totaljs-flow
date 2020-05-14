@@ -1,5 +1,9 @@
 # Total.js: USER LOGIN - Flow
 
+- Make Sure You have installed Total.js Globally In your Systme by `npm install total.js -g`
+
+-----------------------------------------
+
 - download Above code by `git clone https://github.com/Prince-1501/User-login-by-Totaljs-flow.git`
 - open terminal / command-line
 - open directory Where you Installd the code
