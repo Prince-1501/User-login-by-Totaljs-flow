@@ -1,0 +1,1095 @@
+{
+	"tabs": [
+		{
+			"name": "main",
+			"linker": "main",
+			"id": "1589352606391",
+			"index": 0
+		},
+		{
+			"id": "1551471882315",
+			"name": "Weather",
+			"icon": "fa-object-ungroup",
+			"linker": "weather",
+			"index": 1
+		}
+	],
+	"components": [
+		{
+			"id": "1551471895546",
+			"component": "httprequest",
+			"tab": "1551471882315",
+			"name": "HTTP Request",
+			"x": 469,
+			"y": 149,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1551472146348"
+					},
+					{
+						"index": "0",
+						"id": "1551472874827"
+					},
+					{
+						"index": "0",
+						"id": "1551472911801"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"stringify": "encoded",
+				"url": "https://api.openweathermap.org/data/2.5/weather",
+				"method": "GET"
+			},
+			"color": "#5D9CEC",
+			"notes": ""
+		},
+		{
+			"id": "1551471900293",
+			"component": "debug",
+			"tab": "1551471882315",
+			"name": "Debug",
+			"x": 1149,
+			"y": 209,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Enabled",
+				"color": "gray"
+			},
+			"options": {
+				"type": "data",
+				"repository": false,
+				"enabled": true
+			},
+			"color": "#967ADC",
+			"notes": ""
+		},
+		{
+			"id": "1551472055468",
+			"component": "code",
+			"tab": "1551471882315",
+			"name": "City + Key",
+			"x": 295,
+			"y": 242,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1551471895546"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"keepmessage": true,
+				"code": "var params = {};\nparams.q = 'Banska Bystrica, Slovakia';\nparams.appid = FLOW.variables.weatherkey;\nparams.units = 'metric';\nsend(0, params);",
+				"outputs": 1
+			},
+			"color": "#656D78",
+			"notes": ""
+		},
+		{
+			"id": "1551472146348",
+			"component": "code",
+			"tab": "1551471882315",
+			"name": "Data parser",
+			"x": 726,
+			"y": 211,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1551472572597"
+					},
+					{
+						"index": "0",
+						"id": "1551472643447"
+					},
+					{
+						"index": "0",
+						"id": "1551472660345"
+					},
+					{
+						"index": "0",
+						"id": "1551472745363"
+					},
+					{
+						"index": "0",
+						"id": "1551471900293"
+					}
+				],
+				"99": [
+					{
+						"index": "0",
+						"id": "1551471900293"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"keepmessage": true,
+				"code": "var data = value.data.parseJSON(true);\nif (data) {\n\tif (data.message)\n\t\tinstance.throw(data.message);\n\telse\n\t\tsend(0, data);\n}",
+				"outputs": 1
+			},
+			"color": "#656D78",
+			"notes": ""
+		},
+		{
+			"id": "1551472572597",
+			"component": "dashboardanalytics",
+			"tab": "1551471882315",
+			"name": "Temperature",
+			"x": 1153,
+			"y": 347,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"statsyears": 5,
+				"statsmonths": 12,
+				"statsdays": 14,
+				"statshours": 24,
+				"decimals": 2,
+				"format": "{0} °C",
+				"fn": "next(value.main.temp);",
+				"type": "median"
+			},
+			"color": "#5CB36D",
+			"notes": ""
+		},
+		{
+			"id": "1551472643447",
+			"component": "dashboardanalytics",
+			"tab": "1551471882315",
+			"name": "Pressure",
+			"x": 1154,
+			"y": 476,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"statsyears": 5,
+				"statsmonths": 12,
+				"statsdays": 14,
+				"statshours": 24,
+				"decimals": 2,
+				"format": "{0} hPa",
+				"fn": "next(value.main.pressure);",
+				"type": "median"
+			},
+			"color": "#5CB36D",
+			"notes": ""
+		},
+		{
+			"id": "1551472660345",
+			"component": "dashboardanalytics",
+			"tab": "1551471882315",
+			"name": "Humidity",
+			"x": 1152,
+			"y": 595,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"statsyears": 5,
+				"statsmonths": 12,
+				"statsdays": 14,
+				"statshours": 24,
+				"decimals": 0,
+				"format": "{0} %",
+				"fn": "next(value.main.humidity);",
+				"type": "median"
+			},
+			"color": "#5CB36D",
+			"notes": ""
+		},
+		{
+			"id": "1551472745363",
+			"component": "dashboardanalytics",
+			"tab": "1551471882315",
+			"name": "Cloudiness",
+			"x": 1151,
+			"y": 712,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"statsyears": 5,
+				"statsmonths": 12,
+				"statsdays": 14,
+				"statshours": 24,
+				"decimals": 0,
+				"format": "{0} %",
+				"fn": "if (value.clouds && value.clouds.all)\n\tnext(value.clouds.all);",
+				"type": "median"
+			},
+			"color": "#5CB36D",
+			"notes": ""
+		},
+		{
+			"id": "1551472874827",
+			"component": "counter",
+			"tab": "1551471882315",
+			"name": "Counter",
+			"x": 724,
+			"y": 322,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "1",
+				"color": "gray"
+			},
+			"options": {
+				"enabled": true
+			},
+			"color": "#656D78",
+			"notes": ""
+		},
+		{
+			"id": "1551472911801",
+			"component": "lastusage",
+			"tab": "1551471882315",
+			"name": "Last Usage",
+			"x": 724,
+			"y": 433,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "13.05.2020 07:28:22",
+				"color": "gray"
+			},
+			"options": {
+				"format": "dd.MM.yyyy HH:mm:ss"
+			},
+			"color": "#656D78",
+			"notes": ""
+		},
+		{
+			"id": "1589353206126",
+			"component": "httproute",
+			"tab": "1589352606391",
+			"name": "POST /user",
+			"x": 134,
+			"y": 295.8888888888889,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589353257012"
+					},
+					{
+						"index": "0",
+						"id": "1589353566465"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": [
+					99
+				]
+			},
+			"state": {
+				"text": "Listening",
+				"color": "green"
+			},
+			"options": {
+				"timeout": 5,
+				"cachepolicy": 0,
+				"cacheexpire": "5 minutes",
+				"size": 5,
+				"url": "/user",
+				"method": "POST",
+				"name": "",
+				"flags": [
+					"json",
+					"id:1589353206126",
+					"post",
+					5000
+				]
+			},
+			"color": "#5D9CEC",
+			"notes": "### Configuration\n\n- __POST /user__\n- flags: json\n- maximum request data length: __5 kB__\n- empty response: __undefined__\n- cache policy: __no cache__\n- cache expire: __5 minutes__",
+			"cloning": false
+		},
+		{
+			"id": "1589353257012",
+			"component": "httpresponse",
+			"tab": "1589352606391",
+			"name": "HTTP Response",
+			"x": 447.55555555555554,
+			"y": 290.3333333333333,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589353310986"
+					},
+					{
+						"index": "0",
+						"id": "1589427408388"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "0 sec.",
+				"color": "gray"
+			},
+			"options": {
+				"datatype": "json"
+			},
+			"color": "#5D9CEC",
+			"notes": ""
+		},
+		{
+			"id": "1589353310986",
+			"component": "debug",
+			"tab": "1589352606391",
+			"name": "Debug",
+			"x": 809.2222222222222,
+			"y": 283.1111111111111,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Enabled",
+				"color": "gray"
+			},
+			"options": {
+				"type": "data",
+				"repository": false,
+				"enabled": true
+			},
+			"color": "#967ADC",
+			"notes": ""
+		},
+		{
+			"id": "1589353566465",
+			"component": "nosql",
+			"tab": "1589352606391",
+			"name": "NoSQL User DataBase",
+			"x": 439.2222222222222,
+			"y": 153.55555555555554,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589353310986"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"addid": true,
+				"method": "insert",
+				"collection": "User"
+			},
+			"color": "#D770AD",
+			"notes": ""
+		},
+		{
+			"id": "1589354289401",
+			"component": "httproute",
+			"tab": "1589352606391",
+			"name": "POST /login",
+			"x": 121.22222222222223,
+			"y": 32.333333333333314,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589353566465"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Listening",
+				"color": "green"
+			},
+			"options": {
+				"timeout": 5,
+				"cachepolicy": 0,
+				"cacheexpire": "5 minutes",
+				"size": 5,
+				"url": "/login",
+				"method": "POST",
+				"name": "",
+				"flags": [
+					"id:1589354289401",
+					"post",
+					5000
+				]
+			},
+			"color": "#5D9CEC",
+			"notes": "### Configuration\n\n- __POST /login__\n- flags: \n- maximum request data length: __5 kB__\n- empty response: __undefined__\n- cache policy: __no cache__\n- cache expire: __5 minutes__",
+			"cloning": false
+		},
+		{
+			"id": "1589427408388",
+			"component": "template",
+			"tab": "1589352606391",
+			"name": "Template",
+			"x": 808,
+			"y": 412.22222222222223,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589427408398"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"template": "<h1>Hello Successfully completed registration</h1>"
+			},
+			"color": "#37BC9B",
+			"notes": ""
+		},
+		{
+			"id": "1589427408398",
+			"component": "httpresponse",
+			"tab": "1589352606391",
+			"name": "HTTP Response",
+			"x": 1019.1111111111111,
+			"y": 408.88888888888886,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589427408406"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"datatype": "html"
+			},
+			"color": "#5D9CEC",
+			"notes": ""
+		},
+		{
+			"id": "1589427408406",
+			"component": "debug",
+			"tab": "1589352606391",
+			"name": "Debug",
+			"x": 1250.2222222222222,
+			"y": 404.88888888888886,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Enabled",
+				"color": "gray"
+			},
+			"options": {
+				"type": "data",
+				"repository": false,
+				"enabled": true
+			},
+			"color": "#967ADC",
+			"notes": ""
+		},
+		{
+			"id": "1589427954251",
+			"component": "httproute",
+			"tab": "1589352606391",
+			"name": "GET /person",
+			"x": 146.42857142857144,
+			"y": 647,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589428002531"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Listening",
+				"color": "green"
+			},
+			"options": {
+				"method": "GET",
+				"url": "/person",
+				"size": 5,
+				"cacheexpire": "5 minutes",
+				"cachepolicy": 0,
+				"timeout": 5,
+				"flags": [
+					"json",
+					"id:1589427954251",
+					"get",
+					5000
+				],
+				"name": ""
+			},
+			"color": "#5D9CEC",
+			"notes": "### Configuration\n\n- __GET /person__\n- flags: json\n- maximum request data length: __5 kB__\n- empty response: __undefined__\n- cache policy: __no cache__\n- cache expire: __5 minutes__",
+			"cloning": false
+		},
+		{
+			"id": "1589427988119",
+			"component": "httpresponse",
+			"tab": "1589352606391",
+			"name": "",
+			"x": 1137,
+			"y": 800,
+			"connections": {},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "0 sec.",
+				"color": "gray"
+			},
+			"options": {
+				"datatype": "json"
+			},
+			"color": "#5D9CEC",
+			"notes": ""
+		},
+		{
+			"id": "1589428002531",
+			"component": "nosql",
+			"tab": "1589352606391",
+			"name": "Store all Person database",
+			"x": 425.14285714285717,
+			"y": 639.8571428571429,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589427988119"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"method": "query",
+				"collection": "Person"
+			},
+			"color": "#D770AD",
+			"notes": ""
+		},
+		{
+			"id": "1589428027073",
+			"component": "httproute",
+			"tab": "1589352606391",
+			"name": "GET /persons by id",
+			"x": 145.42857142857144,
+			"y": 775,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589428121835"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Listening",
+				"color": "green"
+			},
+			"options": {
+				"method": "GET",
+				"url": "/person/{id}",
+				"size": 5,
+				"cacheexpire": "5 minutes",
+				"cachepolicy": 0,
+				"timeout": 5,
+				"flags": [
+					"json",
+					"id:1589428027073",
+					"get",
+					5000
+				],
+				"name": ""
+			},
+			"color": "#5D9CEC",
+			"notes": "### Configuration\n\n- __GET /person/{id}__\n- flags: json\n- maximum request data length: __5 kB__\n- empty response: __undefined__\n- cache policy: __no cache__\n- cache expire: __5 minutes__",
+			"cloning": false
+		},
+		{
+			"id": "1589428121835",
+			"component": "function",
+			"tab": "1589352606391",
+			"name": "Query for id",
+			"x": 445.1428571428571,
+			"y": 810.8571428571429,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589428189045"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"outputs": 1,
+				"code": "send({id : flowdata.data.params.id});"
+			},
+			"color": "#656D78",
+			"notes": ""
+		},
+		{
+			"id": "1589428189045",
+			"component": "nosql",
+			"tab": "1589352606391",
+			"name": "GET all Person by id",
+			"x": 629.1428571428571,
+			"y": 793.8571428571429,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589427988119"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"collection": "Person",
+				"method": "query"
+			},
+			"color": "#D770AD",
+			"notes": ""
+		},
+		{
+			"id": "1589428718037",
+			"component": "httproute",
+			"tab": "1589352606391",
+			"name": "POST Person details",
+			"x": 147.71428571428572,
+			"y": 964.1428571428572,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589428766061"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Listening",
+				"color": "green"
+			},
+			"options": {
+				"method": "POST",
+				"url": "/person",
+				"size": 5,
+				"cacheexpire": "5 minutes",
+				"cachepolicy": 0,
+				"timeout": 5,
+				"flags": [
+					"json",
+					"id:1589428718037",
+					"post",
+					5000
+				],
+				"name": ""
+			},
+			"color": "#5D9CEC",
+			"notes": "### Configuration\n\n- __POST /person__\n- flags: json\n- maximum request data length: __5 kB__\n- empty response: __undefined__\n- cache policy: __no cache__\n- cache expire: __5 minutes__",
+			"cloning": false
+		},
+		{
+			"id": "1589428766061",
+			"component": "function",
+			"tab": "1589352606391",
+			"name": "validate",
+			"x": 454,
+			"y": 990.5714285714287,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589429029457"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"outputs": 1,
+				"code": "var data = flowdata.data.body;\n\nif(data.email && data.name && data.password )\n\tsend(data);\n"
+			},
+			"color": "#656D78",
+			"notes": ""
+		},
+		{
+			"id": "1589429029457",
+			"component": "nosql",
+			"tab": "1589352606391",
+			"name": "POST  Person",
+			"x": 645.1428571428571,
+			"y": 969.8571428571429,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589427988119"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"addid": true,
+				"method": "insert",
+				"collection": "Person"
+			},
+			"color": "#D770AD",
+			"notes": ""
+		},
+		{
+			"id": "1589429095727",
+			"component": "httproute",
+			"tab": "1589352606391",
+			"name": "PUT Person details",
+			"x": 145.71428571428572,
+			"y": 1118.1428571428573,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589429929502"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Listening",
+				"color": "green"
+			},
+			"options": {
+				"timeout": 5,
+				"cachepolicy": 0,
+				"cacheexpire": "5 minutes",
+				"size": 5,
+				"url": "/person",
+				"method": "PUT",
+				"name": "",
+				"flags": [
+					"json",
+					"id:1589429095727",
+					"put",
+					5000
+				]
+			},
+			"color": "#5D9CEC",
+			"notes": "### Configuration\n\n- __PUT /person__\n- flags: json\n- maximum request data length: __5 kB__\n- empty response: __undefined__\n- cache policy: __no cache__\n- cache expire: __5 minutes__",
+			"cloning": false
+		},
+		{
+			"id": "1589429132737",
+			"component": "nosql",
+			"tab": "1589352606391",
+			"name": "PUT  Person",
+			"x": 640.1428571428571,
+			"y": 1099.857142857143,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589427988119"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"upsertid": false,
+				"upsert": false,
+				"collection": "Person",
+				"method": "update",
+				"addid": true
+			},
+			"color": "#D770AD",
+			"notes": ""
+		},
+		{
+			"id": "1589429243687",
+			"component": "httproute",
+			"tab": "1589352606391",
+			"name": "DELETE Person by id",
+			"x": 148.71428571428572,
+			"y": 1254.1428571428573,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589429272776"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "Listening",
+				"color": "green"
+			},
+			"options": {
+				"timeout": 5,
+				"cachepolicy": 0,
+				"cacheexpire": "5 minutes",
+				"size": 5,
+				"url": "/person/{id}",
+				"method": "DELETE",
+				"flags": [
+					"json",
+					"id:1589429243687",
+					"delete",
+					5000
+				],
+				"name": ""
+			},
+			"color": "#5D9CEC",
+			"notes": "### Configuration\n\n- __DELETE /person/{id}__\n- flags: json\n- maximum request data length: __5 kB__\n- empty response: __undefined__\n- cache policy: __no cache__\n- cache expire: __5 minutes__",
+			"cloning": false
+		},
+		{
+			"id": "1589429272776",
+			"component": "function",
+			"tab": "1589352606391",
+			"name": "Query for id",
+			"x": 447.1428571428571,
+			"y": 1255.857142857143,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589429317537"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"code": "send({id : flowdata.data.params.id});",
+				"outputs": 1
+			},
+			"color": "#656D78",
+			"notes": ""
+		},
+		{
+			"id": "1589429317537",
+			"component": "nosql",
+			"tab": "1589352606391",
+			"name": "DELETE  Person",
+			"x": 651.1428571428571,
+			"y": 1241.857142857143,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589427988119"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"addid": true,
+				"method": "remove",
+				"collection": "Person",
+				"upsert": false,
+				"upsertid": false
+			},
+			"color": "#D770AD",
+			"notes": ""
+		},
+		{
+			"id": "1589429929502",
+			"component": "function",
+			"tab": "1589352606391",
+			"name": "validate",
+			"x": 449,
+			"y": 1111.5714285714287,
+			"connections": {
+				"0": [
+					{
+						"index": "0",
+						"id": "1589429132737"
+					}
+				]
+			},
+			"disabledio": {
+				"input": [],
+				"output": []
+			},
+			"state": {
+				"text": "",
+				"color": "gray"
+			},
+			"options": {
+				"outputs": 1,
+				"code": "var data = flowdata.data.body;\n\nif(data.email && data.name && data.password )\n\tsend(data);\n"
+			},
+			"color": "#656D78",
+			"notes": ""
+		}
+	],
+	"version": 615
+}
